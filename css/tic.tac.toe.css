@@ -1,0 +1,11 @@
+
+table, tr, td {
+    border: 1px solid white;
+}
+tr,td {padding:50px;
+background-color:black;
+color:white;}
+
+table {text-align:center;
+width:200px;}
+
