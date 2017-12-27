@@ -1,27 +1,95 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>Tic tac tue</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html>
 
-    <!-- Bootstrap CSS -->
-   <link rel="stylesheet" type="text/css" href="css/tic.tac.toe.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-  </head>
-  <body>
-    <h1>Tic tac toe</h1>
-    <div id="playground" >
+<head>
+    <title>tic-tac-toe</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <style type="text/css">
+    td {
+        width: 120px;
+        height: 120px;
+       /* border: thin solid white*/
+        background-color:black;
+        color:white;
+        cursor: pointer;
+        text-align: center;
+        vertical-align: middle;
+        
+
+    }
+
+    .x::before {
+        content: "X";
+    }
+
+    .o::before {
+        content: "O";
+    }
+    
+    </style>
+</head>
+
+<body>
+    <h1>Tic Tac Toe</h1>
+    <button onclick="startNewGame('playground', 3, 3)">Start new game</button>
+    <div id="playground">
     </div>
-    <input type="button" value="Start" id="start"/>
-    <p id="result">
+    <p id="result"></p>
+    <script type="text/javascript">
+    function startNewGame(parentId, numOfRows, numOfColumns) {
+        // initialize moves array
+        let moves = [];
+        let gameEnded = false;
+        $('#result').text("Your move! ");
+        // empty parent
+        $('#' + parentId).empty();
+        // create table
+        const table = $('<table>').appendTo($('#' + parentId));
+        for (let ri = 0; ri < numOfRows; ri++) {
+            const tr = $('<tr>').appendTo(table);
+            for (let ci = 0; ci < numOfColumns; ci++) {
+                const td = $('<td>').appendTo(tr);
+                td.click(function() {
+                    if (moves.length == 9 || gameEnded) {
+                        return;
+                    }
+                    //debugger;
+                    const position = $('td').index($(this));
+                    if (moves.indexOf(position) == -1) {
+                        moves.push(position);
+                        const isXMove = moves.length % 2 == 1;
+                        $(this).attr("class", isXMove ? "x" : "o");
+                        if (moves.length >= 5) {
+                            const movesToCheck = moves.filter(function(element, index, array) {
+                                return isXMove ? index % 2 == 0 : index % 2 == 1;
+                            });
+                            const movesToCheckString = movesToCheck.sort().join('');
+                            const paths = ["012", "345", "678", "036", "147", "258", "048", "246"];
+                            for (let i = 0; i < paths.length; i++) {
+                                const path = paths[i];
+                                if (movesToCheckString.indexOf(path[0]) != -1 && movesToCheckString.indexOf(path[1]) != -1
+                                   && movesToCheckString.indexOf(path[2]) != -1) {
+                                    gameEnded = true;
+                                    $('#result').text("GAME OVER");
+                                    break;
+                                }if (moves.length == 9){
+                                    $('#result').text(" GAME DRAW");
+                                }
+                            }
+                        }
+                        if (!gameEnded && isXMove) {
+                            const tds = $("td").not(".x").not(".o");
+                            if (tds && tds.length > 0) {
+                                const td = tds[0]
+                                td.click();
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+    </script>
+</body>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    <script src="js/tic.tac.toe.js"></script>
-  </body>
 </html>
