@@ -5,6 +5,26 @@
     <title>tic-tac-toe</title>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <style type="text/css">
+
+    body {
+        text-align: center;
+        justify-content: center;
+        font-family:Book Antiqua;
+
+    }
+
+    #playground{
+        text-align: center;
+        justify-content: center;
+    }
+
+    #playground{
+        position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    }
     td {
         width: 120px;
         height: 120px;
@@ -14,8 +34,30 @@
         cursor: pointer;
         text-align: center;
         vertical-align: middle;
-        
+    }
 
+    button{
+        background-color: #f4511e;
+        border: none;
+        color: white;
+        padding: 5px 16px;
+        text-align: center;
+        font-size: 16px;
+        /* margin: 4px 2px; */
+        opacity: 0.6;
+        transition: 0.3s;
+        /* display: inline-block; */
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    button:hover {opacity: 1}
+
+    aside{
+        float:left;
+        width:200px;
+        color:white;
+        background-color:black
     }
 
     .x::before {
@@ -30,6 +72,11 @@
 </head>
 
 <body>
+    <aside>    
+        Games played on three-in-a-row boards can be traced back to ancient Egypt, where such game boards have been found on roofing tiles dating from around 1300 BCE.
+        An early variation of tic-tac-toe was played in the Roman Empire, around the first century BC. It was called terni lapilli (three pebbles at a time) and instead of having any number of pieces, each player only had three, thus they had to move them around to empty spaces to keep playing.
+        The game's grid markings have been found chalked all over Rome. Another closely related ancient game is Three Men's Morris which is also played on a simple grid and requires three pieces in a row to finish, and Picaria, a game of the Puebloans.
+    </aside>
     <h1>Tic Tac Toe</h1>
     <button onclick="startNewGame('playground', 3, 3)">Start new game</button>
     <div id="playground">
